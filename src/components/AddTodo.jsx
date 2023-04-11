@@ -12,22 +12,26 @@ export default function AddTodo({ onAddTodo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    todoApi.createTodo(text)
-    .then((res) => {
+    if (text.trim().length !== 0) {
+      todoApi.createTodo(text).then((res) => {
         console.log(res);
-        onAddTodo(res.data)
-    });
+        onAddTodo(res.data);
+      });
+    }
     setText("");
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="w-4/5" onSubmit={handleSubmit}>
       <input
+        className="p-2 w-[85%] h-full rounded-l-2xl outline-none"
         type="text"
         placeholder="add Todo"
         onChange={handleChange}
         value={text}
       />
-      <button>ADD</button>
+      <button className="bg-orange-700 w-[15%] h-full p-2 rounded-r-2xl">
+        ADD
+      </button>
     </form>
   );
 }

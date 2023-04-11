@@ -1,32 +1,50 @@
 import React from "react";
 import { createContext } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const LoginContext = createContext();
 
-export default function Header() {
-  const [isLogin, setIsLogin] = useState(false)
+export default function Header( props ) {
+  const [isLogin, setIsLogin] = useState(false);
 
-  const handleIsLoginChange = (value) => {
+  const navigate = useNavigate();
+
+  const handleValidLogin = (value) => {
     setIsLogin(value);
-  }
+  };
+
+  const handleSign = () => {
+    if (localStorage.getItem("token")) navigate("/");
+  };
 
   return (
-    <header>
+    <header className="flex items-center justify-center flex-col font-bold">
       <Link to={"/"}>
-        <h1 className="text-2xl">Todo List</h1>
+        <h1 className="text-4xl text-white">Todo List</h1>
       </Link>
-      <div>
+      <div className="text-yellow-100">
         {isLogin ? (
           <Link to={"/"} onClick={() => localStorage.removeItem("token")}>
             로그아웃
           </Link>
         ) : (
-          <LoginContext.Provider value={handleIsLoginChange}>
-            <Link to={"/signin"}>로그인</Link>
-            <Link to={"/signup"}>회원가입</Link>
-          </LoginContext.Provider>
+          <div>
+            <Link
+              to={{
+                pathname: `/signin`,
+                state: { handleValidLogin: handleValidLogin },
+              }}
+            >
+              로그인
+            </Link>
+            <Link
+              className="ml-4"
+              to={{ pathname: `/signup`, state: { handleValidLogin } }}
+            >
+              회원가입
+            </Link>
+          </div>
         )}
       </div>
     </header>

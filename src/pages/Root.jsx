@@ -6,11 +6,9 @@ import { TokenContext } from "../context/TokenContext";
 
 export default function Root() {
   return (
-    // <TokenContext>
       <TodoApiContext>
         <Header />
         <Outlet />
       </TodoApiContext>
-    // </TokenContext>
   );
 }
