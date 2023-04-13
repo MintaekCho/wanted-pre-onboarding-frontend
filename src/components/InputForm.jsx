@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import UserInfo from "../api/userInfo";
+import { LoginContext } from "../pages/Root";
 
 export default function InputForm({ type }) {
   const [email, setEmail] = useState("");
   const [emailCheck, setEmailCheck] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(false);
+
 
   const userInfo = new UserInfo();
   const location = useLocation();
@@ -53,7 +55,7 @@ export default function InputForm({ type }) {
 
   return (
     <form
-      className="flex flex-col items-center justify-center w-3/5 h-2/5 mt-4 bg-slate-800 rounded-3xl"
+      className="flex flex-col items-center justify-center w-3/5 min-w-[550px] max-w-[750px] h-2/5 min-h-[300px] max-h-[500px] mt-4 bg-slate-800 rounded-3xl"
       onSubmit={handleSubmit}
     >
       <h2 className="text-2xl text-white font-bold mb-4">
@@ -85,7 +87,7 @@ export default function InputForm({ type }) {
           id="pw"
           className="w-[85%] h-full p-2 rounded-xl outline-none ml-2"
           data-testid="password-input"
-          type="text"
+          type="password"
           placeholder="비밀번호를 입력해주세요"
           value={password}
           onChange={handlePassword}
