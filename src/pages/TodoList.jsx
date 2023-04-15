@@ -1,15 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AddTodo from "../components/AddTodo";
 import Todo from "../components/Todo";
-import { TodoContext } from "../context/TodoApiContext";
 import { useFetch } from "../hooks/useFetch";
 
 export default function TodoList() {
   const { data, setData } = useFetch("/todos");
-
-  const todoApi = useContext(TodoContext);
 
   const navigate = useNavigate();
 

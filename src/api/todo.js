@@ -2,9 +2,9 @@ import axios from "axios";
 
 export default class Todo {
   constructor() {
-    this.ACCESS_TOKEN = `Bearer ${localStorage.getItem("token") || ''}`;
+    this.ACCESS_TOKEN = `Bearer ${localStorage.getItem("token") || ""}`;
     this.httpClient = axios.create({
-      baseURL: "https://www.pre-onboarding-selection-task.shop/",
+      baseURL: process.env.REACT_APP_API_URL,
       headers: {
         Authorization: this.ACCESS_TOKEN,
       },
@@ -15,7 +15,6 @@ export default class Todo {
     const todoData = {
       todo: todo,
     };
-
     return this.httpClient.post("/todos", todoData, {
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +32,7 @@ export default class Todo {
       isCompleted: isCompleted,
     };
 
-   return this.httpClient.put(`/todos/${id}`, updateTodo, {
+    return this.httpClient.put(`/todos/${id}`, updateTodo, {
       headers: {
         "Content-Type": "application/json",
       },

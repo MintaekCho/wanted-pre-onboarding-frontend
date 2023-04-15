@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default class UserInfo {
   constructor() {
     this.httpClient = axios.create({
-      baseURL: "https://www.pre-onboarding-selection-task.shop/",
+      baseURL: process.env.REACT_APP_API_URL
     });
   }
 

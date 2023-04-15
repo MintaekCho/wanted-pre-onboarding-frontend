@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Header from './components/Header';
 import Error from './pages/Error';
 import Root from './pages/Root';
 import SignUp from './pages/SignUp';

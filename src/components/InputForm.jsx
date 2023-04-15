@@ -1,8 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import UserInfo from "../api/userInfo";
-import { LoginContext } from "../pages/Root";
 
 export default function InputForm({ type }) {
   const [email, setEmail] = useState("");
@@ -10,8 +8,6 @@ export default function InputForm({ type }) {
   const [isValid, setIsValid] = useState(false);
 
   const userInfo = new UserInfo();
-  const location = useLocation();
-  const handleValidLogin = location.state && console.log(handleValidLogin);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useLoginFetch = url => {
 
@@ -7,7 +7,7 @@ export const useLoginFetch = url => {
     useEffect(() => {
         localStorage.getItem('token') ? setIsLogin(true) : setIsLogin(false);
     }, [url])
-    
+
     return {isLogin, setIsLogin};
 }
 

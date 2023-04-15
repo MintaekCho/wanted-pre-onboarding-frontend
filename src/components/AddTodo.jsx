@@ -14,7 +14,6 @@ export default function AddTodo({ onAddTodo }) {
     e.preventDefault();
     if (text.trim().length !== 0) {
       todoApi.createTodo(text).then((res) => {
-        console.log(res);
         onAddTodo(res.data);
       });
     }
