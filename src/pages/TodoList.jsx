@@ -4,40 +4,40 @@ import { useNavigate } from "react-router-dom";
 import AddTodo from "../components/AddTodo";
 import Todo from "../components/Todo";
 import { TodoContext } from "../context/TodoApiContext";
+import { useFetch } from "../hooks/useFetch";
 
 export default function TodoList() {
-  const [todos, setTodos] = useState([]);
+  const { data, setData } = useFetch("/todos");
+
   const todoApi = useContext(TodoContext);
 
   const navigate = useNavigate();
 
-  const handleAddTodo = (newTodo) => {
-    setTodos([...todos, newTodo]);
+  const handleAddTodo = (newTodo) =>  {
+    setData([...data, newTodo]);
   };
 
   const handleDeleteTodo = (id) => {
-    setTodos([...todos].filter((todo) => todo.id !== id));
+    setData([...data].filter((todo) => todo.id !== id));
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/signin");
-    }
-    todoApi
-      .getTodos()
-      .then((res) => {
-        setTodos([...res.data]);
-      })
-      .catch((e) => console.error(e));
-  }, []);
+    !localStorage.getItem("token") && navigate("/signin");
+  });
 
   // TODO: Todo CRUD 구현하기
   return (
     <section className="w-3/5 min-w-[550px] max-w-[750px] h-4/5  min-h-[500px] max-h-[850px] flex items-center justify-center flex-col bg-slate-800 mt-10 rounded-2xl">
       <ul className="text-white w-4/5 h-4/5 p-4 mb-4 overflow-auto">
-        {todos &&
-          todos.map((todo) => (
-            <Todo key={todo.id} todos={todos} todo={todo} onSetTodo={setTodos} onDeleteTodo={handleDeleteTodo} />
+        {data &&
+          data.map((todo) => (
+            <Todo
+              key={todo.id}
+              todos={data}
+              todo={todo}
+              onSetTodo={setData}
+              onDeleteTodo={handleDeleteTodo}
+            />
           ))}
       </ul>
       <AddTodo onAddTodo={handleAddTodo} />

@@ -13,7 +13,7 @@ function App() {
       element: <Root />,
       errorElement: <Error />,
       children: [
-        {index: true, element: <TodoList />},
+        {path: '/todo', element: <TodoList />},
         {path: '/signup', element: <SignUp />},
         {path: '/signin', element: <Singin />}
       ]

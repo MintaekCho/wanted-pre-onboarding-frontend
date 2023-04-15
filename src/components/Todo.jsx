@@ -3,9 +3,9 @@ import { useContext } from "react";
 import { TodoContext } from "../context/TodoApiContext";
 import { BsFillEraserFill, BsPencil } from "react-icons/bs";
 
-export default function ({todos, todo, onSetTodo, onDeleteTodo }) {
+export default function ({ todos, todo, onSetTodo, onDeleteTodo }) {
   const todoApi = useContext(TodoContext);
-  const [isComplete, setIsComplete] = useState(false);
+  const [isComplete, setIsComplete] = useState(todo.isCompleted);
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateValue, setUpdateValue] = useState("");
 
@@ -18,10 +18,10 @@ export default function ({todos, todo, onSetTodo, onDeleteTodo }) {
           className="w-6 h-6"
           type="checkbox"
         />
-        {isEditMode ? (
+        {!isEditMode ? (
           <p className="w-full h-full ml-4">{todo.todo}</p>
         ) : (
-          <div className="flex w-full">
+          <form className="flex w-full">
             <input
               type="text"
               className="w-[90%] h-10 text-black ml-4 p-1 rounded-l-xl"
@@ -30,20 +30,29 @@ export default function ({todos, todo, onSetTodo, onDeleteTodo }) {
               value={updateValue}
             />
             <button
-              onClick={() => onSetTodo([...todos].map(el => {
-                if(el.id === todo.id) return el.todo = updateValue
-        }))}
+              onClick={() => {
+                console.log(todo);
+                console.log(isComplete);
+                todoApi.updateTodo(todo.id, updateValue, isComplete)
+                .then((res) => {
+                    console.log(res)
+                    const newTodos = todos.map((todo) => todo.id === res.data.id ? res.data : todo)
+                    onSetTodo(newTodos)
+                })
+                setIsEditMode(false);
+              }}
               className="w-[10%] min-w-[40px] h-10 rounded-r-xl text-xs bg-orange-700 p-2"
             >
               확인
             </button>
-          </div>
+          </form>
         )}
       </div>
       <div className="flex justify-end items-center">
         <button
           onClick={() => setIsEditMode(!isEditMode)}
           className="w-8 h-8 mr-2 rounded-full bg-white text-black flex items-center justify-center"
+          data-testid="modify-button"
         >
           <BsPencil />
         </button>
@@ -53,6 +62,7 @@ export default function ({todos, todo, onSetTodo, onDeleteTodo }) {
             todoApi.deleteTodo(todo.id);
             onDeleteTodo(todo.id);
           }}
+          data-testid="delete-button"
         >
           <BsFillEraserFill />
         </button>

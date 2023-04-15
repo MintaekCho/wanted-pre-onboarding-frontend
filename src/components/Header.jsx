@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { LoginContext } from "../pages/Root";
+import { Link, useLocation } from "react-router-dom";
+import { useLoginFetch } from "../hooks/useLoginFetch";
 
-export default function Header(props) {
+export default function Header() {
+
+  const {isLogin, setIsLogin} = useLoginFetch(useLocation().pathname);
 
   return (
     <header className="flex items-center justify-center flex-col font-bold">
@@ -10,11 +11,12 @@ export default function Header(props) {
         <h1 className="text-4xl text-white">Todo List</h1>
       </Link>
       <div className="text-yellow-100">
-        {localStorage.getItem('token') ? (
+        {isLogin ? (
           <Link
             to={"/signin"}
             onClick={() => {
               localStorage.removeItem("token");
+              setIsLogin(false);
             }}
           >
             로그아웃
@@ -24,6 +26,7 @@ export default function Header(props) {
             <Link
               to={{
                 pathname: `/signin`,
+                state: { setIsLogin: setIsLogin },
               }}
             >
               로그인

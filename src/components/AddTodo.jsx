@@ -28,8 +28,12 @@ export default function AddTodo({ onAddTodo }) {
         placeholder="add Todo"
         onChange={handleChange}
         value={text}
+        data-testid="new-todo-input"
       />
-      <button className="bg-orange-700 w-[15%] h-full p-2 rounded-r-2xl">
+      <button
+        className="bg-orange-700 w-[15%] h-full p-2 rounded-r-2xl"
+        data-testid="new-todo-add-button"
+      >
         ADD
       </button>
     </form>

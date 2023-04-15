@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import UserInfo from "../api/userInfo";
@@ -6,15 +6,12 @@ import { LoginContext } from "../pages/Root";
 
 export default function InputForm({ type }) {
   const [email, setEmail] = useState("");
-  const [emailCheck, setEmailCheck] = useState(false);
   const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState(false);
-
+  const [isValid, setIsValid] = useState(false);
 
   const userInfo = new UserInfo();
   const location = useLocation();
-  const handleValidLogin = location.state && 
-  console.log(handleValidLogin)
+  const handleValidLogin = location.state && console.log(handleValidLogin);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,14 +28,19 @@ export default function InputForm({ type }) {
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    setEmailCheck(validateEmail(email));
-    console.log();
   };
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    setEmailCheck(validatePassword(password));
   };
+
+  useEffect(() => {
+    if (validateEmail(email) && validatePassword(password)) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [email, password]);
 
   let buttonType = "";
 
@@ -95,8 +97,9 @@ export default function InputForm({ type }) {
       </div>
 
       <button
-        className="w-1/5 bg-orange-700 text-white font-bold p-2 rounded-2xl mt-4"
+        className="w-1/5 bg-orange-700 text-white font-bold p-2 rounded-2xl mt-4 disabled:bg-gray-600 disabled:text-gray-500"
         data-testid={buttonType}
+        disabled={!isValid}
       >
         {type === "signup" ? "회원가입" : "로그인"}
       </button>

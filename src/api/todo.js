@@ -2,12 +2,15 @@ import axios from "axios";
 
 export default class Todo {
   constructor() {
+    this.ACCESS_TOKEN = `Bearer ${localStorage.getItem("token") || ''}`;
     this.httpClient = axios.create({
       baseURL: "https://www.pre-onboarding-selection-task.shop/",
+      headers: {
+        Authorization: this.ACCESS_TOKEN,
+      },
     });
   }
 
-  ACCESS_TOKEN = `Bearer ${localStorage.getItem("token")}`;
   async createTodo(todo) {
     const todoData = {
       todo: todo,
@@ -15,39 +18,29 @@ export default class Todo {
 
     return this.httpClient.post("/todos", todoData, {
       headers: {
-        Authorization: this.ACCESS_TOKEN,
         "Content-Type": "application/json",
       },
     });
   }
 
   async getTodos() {
-    return this.httpClient.get("/todos", {
-      headers: {
-        Authorization: this.ACCESS_TOKEN,
-      },
-    });
+    return this.httpClient.get("/todos", {});
   }
 
   async updateTodo(id, todo, isCompleted) {
-    const todoData = {
+    const updateTodo = {
       todo: todo,
       isCompleted: isCompleted,
     };
 
-    this.httpClient.put(`/todos/${id}`, todoData, {
+   return this.httpClient.put(`/todos/${id}`, updateTodo, {
       headers: {
-        Authorization: this.ACCESS_TOKEN,
         "Content-Type": "application/json",
       },
     });
   }
 
   async deleteTodo(id) {
-    this.httpClient.delete(`/todos/${id}`, {
-      headers: {
-        Authorization: this.ACCESS_TOKEN,
-      },
-    });
+    await this.httpClient.delete(`/todos/${id}`);
   }
 }

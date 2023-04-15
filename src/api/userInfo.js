@@ -23,7 +23,7 @@ export default class UserInfo {
       })
       .then((res) => {
         alert("회원가입에 성공하엿습니다.");
-        this.navigate("/");
+        this.navigate("/signin");
       })
       .catch((err) => {
         alert(err.message);
@@ -44,7 +44,7 @@ export default class UserInfo {
       .then((res) => {
         const { access_token } = res.data;
         localStorage.setItem("token", access_token);
-        this.navigate("/");
+        this.navigate("/todo");
       })
       .catch((err) => {
         alert(err.message);
