@@ -6,9 +6,8 @@ export const useFetch = (url) => {
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
-  const todo = new Todo();
-
   useEffect(() => {
+    const todo = new Todo();
     todo.httpClient
       .get(url)
       .then((res) => {
