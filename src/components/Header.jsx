@@ -7,7 +7,7 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-center flex-col font-bold">
-      <Link to={"/"}>
+      <Link to={isLogin ? '/todo' : '/'}>
         <h1 className="text-4xl text-white">Todo List</h1>
       </Link>
       <div className="text-yellow-100">

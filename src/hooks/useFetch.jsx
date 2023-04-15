@@ -23,7 +23,7 @@ export const useFetch = (url) => {
         setIsPending(false);
         setError(err.message);
       });
-  }, [url, todo.httpClient]);
+  }, [url]);
 
   return { isPending, data, setData, error };
 };
