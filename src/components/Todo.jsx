@@ -7,7 +7,7 @@ export default function Todo({ todos, todo, onSetTodo, onDeleteTodo }) {
   const todoApi = useContext(TodoContext);
   const [isComplete, setIsComplete] = useState(todo.isCompleted);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [updateValue, setUpdateValue] = useState("");
+  const [updateValue, setUpdateValue] = useState('');
 
   const handleCheck = async () => {
     await todoApi.updateTodo(todo.id, todo.todo, !isComplete).then((res) => {
@@ -62,7 +62,7 @@ export default function Todo({ todos, todo, onSetTodo, onDeleteTodo }) {
         <button
           onClick={() => {
             setIsEditMode(!isEditMode);
-            setUpdateValue("");
+            setUpdateValue(todo.todo);
           }}
           className="w-8 h-8 mr-2 rounded-full bg-white text-black flex items-center justify-center"
           data-testid="modify-button"
