@@ -15,7 +15,7 @@ export default function AddTodo({ onAddTodo }) {
     if (text.trim().length !== 0) {
       todoApi.createTodo(text).then((res) => {
         onAddTodo(res.data);
-      });
+      }).catch(() => alert('Todo 추가를 실패하였습니다.'));
     }
     setText("");
   };

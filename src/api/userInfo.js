@@ -26,7 +26,7 @@ export default class UserInfo {
         this.navigate("/signin");
       })
       .catch((err) => {
-        alert(err.message);
+        alert('회원가입에 실패했습니다.');
       });
   }
 
@@ -47,7 +47,7 @@ export default class UserInfo {
         this.navigate("/todo");
       })
       .catch((err) => {
-        alert(err.message);
+        alert('로그인에 실패했습니다.');
       });
   }
 }

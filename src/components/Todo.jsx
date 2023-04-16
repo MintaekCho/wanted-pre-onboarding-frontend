@@ -16,7 +16,7 @@ export default function Todo({ todos, todo, onSetTodo, onDeleteTodo }) {
       );
       onSetTodo(newTodos);
       setIsComplete(!isComplete)
-    });
+    }).catch(() => alert('다시 시도해주세요.'));
   };
 
   return (
@@ -27,6 +27,7 @@ export default function Todo({ todos, todo, onSetTodo, onDeleteTodo }) {
           onChange={handleCheck}
           className="w-6 h-6"
           type="checkbox"
+          data-testid="modify-input"
         />
         {!isEditMode ? (
           <p className={`w-full h-full ml-4 ${isComplete ? 'line-through text-gray-400' : ''}`}>{todo.todo}</p>
@@ -48,10 +49,11 @@ export default function Todo({ todos, todo, onSetTodo, onDeleteTodo }) {
                       todo.id === res.data.id ? res.data : todo
                     );
                     onSetTodo(newTodos);
-                  });
+                  }).catch(() => alert('수정에 실패했습니다.'));
                 setIsEditMode(false);
               }}
               className="w-[10%] min-w-[40px] h-10 rounded-r-xl text-xs bg-orange-700 p-2"
+              data-testid="submit-button"
             >
               확인
             </button>
@@ -72,7 +74,7 @@ export default function Todo({ todos, todo, onSetTodo, onDeleteTodo }) {
         <button
           className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center"
           onClick={() => {
-            todoApi.deleteTodo(todo.id);
+            todoApi.deleteTodo(todo.id).catch(() => alert('삭제하지 못했습니다. 다시 시도해주세요.'));
             onDeleteTodo(todo.id);
           }}
           data-testid="delete-button"
