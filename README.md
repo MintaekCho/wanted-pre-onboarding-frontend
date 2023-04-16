@@ -16,3 +16,4 @@ $ npm run start
 https://warm-pegasus-65e6a8.netlify.app
 
 ## DEMO
+![화면-기록-2023-04-16-오전-10 18 26](https://user-images.githubusercontent.com/105726931/232261742-47fb116a-4ac5-4b14-815b-50ae83826e82.gif)
