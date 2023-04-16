@@ -3,24 +3,33 @@ import { useContext } from "react";
 import { TodoContext } from "../context/TodoApiContext";
 import { BsFillEraserFill, BsPencil } from "react-icons/bs";
 
-export default function Todo ({ todos, todo, onSetTodo, onDeleteTodo }) {
+export default function Todo({ todos, todo, onSetTodo, onDeleteTodo }) {
   const todoApi = useContext(TodoContext);
   const [isComplete, setIsComplete] = useState(todo.isCompleted);
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateValue, setUpdateValue] = useState("");
 
+  const handleCheck = async () => {
+    await todoApi.updateTodo(todo.id, todo.todo, !isComplete).then((res) => {
+      const newTodos = todos.map((todo) =>
+        todo.id === res.data.id ? res.data : todo
+      );
+      onSetTodo(newTodos);
+      setIsComplete(!isComplete)
+    });
+  };
 
   return (
     <li className="flex justify-between text-xl mt-2 font-bold">
       <div className="flex w-4/5 items-center">
         <input
           checked={isComplete}
-          onChange={() => setIsComplete(!isComplete)}
+          onChange={handleCheck}
           className="w-6 h-6"
           type="checkbox"
         />
         {!isEditMode ? (
-          <p className="w-full h-full ml-4">{todo.todo}</p>
+          <p className={`w-full h-full ml-4 ${isComplete ? 'line-through text-gray-400' : ''}`}>{todo.todo}</p>
         ) : (
           <form className="flex w-full">
             <input
