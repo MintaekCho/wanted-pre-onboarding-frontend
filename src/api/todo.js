@@ -1,13 +1,14 @@
 import axios from "axios";
 
+axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+  "token"
+)}`;
+
 export default class Todo {
   constructor() {
     this.ACCESS_TOKEN = `Bearer ${localStorage.getItem("token") || ""}`;
     this.httpClient = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
-      headers: {
-        Authorization: this.ACCESS_TOKEN,
-      },
     });
   }
 
